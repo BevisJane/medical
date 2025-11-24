@@ -4,6 +4,12 @@ An encrypted temperature check system using Fully Homomorphic Encryption (FHE) e
 FHEVM protocol by Zama. Users can submit their temperature readings encrypted, and the system checks for fever (�?7.5°C)
 without ever seeing the actual temperature value.
 
+## 🚀 Live Demo
+
+**Project Deployment**: [https://medicalxiao.vercel.app/](https://medicalxiao.vercel.app/)
+
+**Video Demo**: [Download medical.mp4](./medical.mp4) - Watch the encrypted temperature check system in action
+
 ## Features
 
 - **Privacy-Preserving**: Temperature data remains encrypted throughout the process
