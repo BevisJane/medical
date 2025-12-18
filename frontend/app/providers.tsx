@@ -21,7 +21,7 @@ export function Providers({ children }: Props) {
   return (
     <WagmiProvider config={config}>
       <QueryClientProvider client={queryClient}>
-        <RainbowKitProvider>
+        <RainbowKitProvider locale="en">
           <WagmiEthersSignerProvider initialMockChains={{ 31337: "http://localhost:8545" }}>
             <InMemoryStorageProvider>{children}</InMemoryStorageProvider>
           </WagmiEthersSignerProvider>

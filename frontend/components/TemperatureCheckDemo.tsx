@@ -114,9 +114,9 @@ export const TemperatureCheckDemo = () => {
   const hasFever = temperatureCheck.clearFeverResult === true;
 
   return (
-    <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-8">
+    <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-8 page-transition">
       {/* Header Card */}
-      <div className="panel-card mb-6">
+      <div className="panel-card mb-6 slide-in-right">
         <div className="flex items-center gap-4">
           <div className="w-12 h-12 rounded-full bg-gradient-to-br from-indigo-500 to-purple-600 flex items-center justify-center shadow-lg">
             <span className="text-2xl">🌡️</span>
@@ -134,12 +134,15 @@ export const TemperatureCheckDemo = () => {
 
 
       {/* Encrypted Data */}
-      <div className="panel-card mb-6">
+      <div className="panel-card mb-6 card-enter" style={{ animationDelay: '0.1s' }}>
         <p className={titleClass}>Encrypted Data</p>
         <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
           <div className="p-4 bg-gradient-to-br from-indigo-50 to-purple-50 rounded-lg border border-indigo-100">
             <p className="text-sm font-semibold text-gray-600 mb-2">Temperature</p>
-            {printProperty("Handle", temperatureCheck.temperatureHandle)}
+            {temperatureCheck.temperatureHandle && 
+             temperatureCheck.temperatureHandle !== "0" && 
+             temperatureCheck.temperatureHandle !== "0x0000000000000000000000000000000000000000" &&
+             printProperty("Handle", "[ENCRYPTED_FHE_HANDLE]")}
             {printProperty(
               "Decrypted",
               tempValue !== null ? `${tempValue}°C` : "Not decrypted"
@@ -147,7 +150,10 @@ export const TemperatureCheckDemo = () => {
           </div>
           <div className="p-4 bg-gradient-to-br from-green-50 to-emerald-50 rounded-lg border border-green-100">
             <p className="text-sm font-semibold text-gray-600 mb-2">Fever Result</p>
-            {printProperty("Handle", temperatureCheck.feverResultHandle)}
+            {temperatureCheck.feverResultHandle && 
+             temperatureCheck.feverResultHandle !== "0" && 
+             temperatureCheck.feverResultHandle !== "0x0000000000000000000000000000000000000000" &&
+             printProperty("Handle", "[ENCRYPTED_FHE_HANDLE]")}
             {printProperty(
               "Result",
               temperatureCheck.clearFeverResult !== undefined
@@ -163,7 +169,7 @@ export const TemperatureCheckDemo = () => {
       </div>
 
       {/* Submit Temperature */}
-      <div className="panel-card mb-6">
+      <div className="panel-card mb-6 card-enter" style={{ animationDelay: '0.2s' }}>
         <p className={titleClass}>Submit Temperature Reading</p>
         <div className="mt-6 space-y-4">
           <div className="flex flex-col sm:flex-row gap-4 items-start sm:items-center">
@@ -244,7 +250,7 @@ export const TemperatureCheckDemo = () => {
       </div>
 
       {/* Message */}
-      <div className="panel-card">
+      <div className="panel-card card-enter" style={{ animationDelay: '0.3s' }}>
         {printProperty("Message", temperatureCheck.message)}
         {temperatureCheck.message?.includes("Relayer") && (
           <div className="mt-4 p-4 bg-gradient-to-br from-yellow-50 to-amber-50 border border-yellow-200 rounded-lg">
@@ -252,6 +258,16 @@ export const TemperatureCheckDemo = () => {
             <p className="text-sm text-yellow-700">
               The FHEVM Relayer service on Sepolia testnet may be temporarily unavailable. 
               For testing, you can switch to local Hardhat network (localhost:8545) which uses mock FHEVM.
+            </p>
+          </div>
+        )}
+        {/* FHEVM Error Notice */}
+        {!fhevmInstance && isConnected && (
+          <div className="mt-4 p-4 bg-gradient-to-br from-blue-50 to-indigo-50 border border-blue-200 rounded-lg">
+            <p className="text-sm text-blue-800 font-semibold mb-2">ℹ️ FHEVM Initialization:</p>
+            <p className="text-sm text-blue-700">
+              FHEVM is initializing. This may take a moment. If you see errors in the console, 
+              they are usually harmless development warnings. The app will use mock FHEVM on localhost.
             </p>
           </div>
         )}

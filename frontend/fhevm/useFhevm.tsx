@@ -149,7 +149,10 @@ export function useFhevm(parameters: {
           _setStatus("ready");
         })
         .catch((e) => {
-          console.log(`Error Was thrown !!! error... ` + e.name);
+          // Only log errors in development, and make them less alarming
+          if (process.env.NODE_ENV === 'development') {
+            console.warn(`[useFhevm] Instance creation warning:`, e.name || e.message);
+          }
           if (thisSignal.aborted) return;
 
           // it's not possible to have a _providerRef modified without a prior abort
